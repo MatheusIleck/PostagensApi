@@ -1,0 +1,109 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\vs\\projetos\\PostagensApi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|d:\\vs\\projetos\\postagensapi\\postagensapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|solutionrelative:postagensapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|d:\\vs\\projetos\\postagensapi\\postagensapi\\extensions\\builderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|solutionrelative:postagensapi\\extensions\\builderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|d:\\vs\\projetos\\postagensapi\\postagensapi\\endpoints\\endpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|solutionrelative:postagensapi\\endpoints\\endpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|d:\\vs\\projetos\\postagensapi\\postagensapi\\extensions\\iendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|solutionrelative:postagensapi\\extensions\\iendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|d:\\vs\\projetos\\postagensapi\\postagensapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|solutionrelative:postagensapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Endpoint.cs",
+              "DocumentMoniker": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Endpoints\\Endpoint.cs",
+              "RelativeDocumentMoniker": "PostagensApi\\Endpoints\\Endpoint.cs",
+              "ToolTip": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Endpoints\\Endpoint.cs",
+              "RelativeToolTip": "PostagensApi\\Endpoints\\Endpoint.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T00:32:24.483Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IEndPoint.cs",
+              "DocumentMoniker": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Extensions\\IEndPoint.cs",
+              "RelativeDocumentMoniker": "PostagensApi\\Extensions\\IEndPoint.cs",
+              "ToolTip": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Extensions\\IEndPoint.cs",
+              "RelativeToolTip": "PostagensApi\\Extensions\\IEndPoint.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T00:32:21.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\appsettings.json",
+              "RelativeDocumentMoniker": "PostagensApi\\appsettings.json",
+              "ToolTip": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\appsettings.json",
+              "RelativeToolTip": "PostagensApi\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-08-30T00:19:37.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Program.cs",
+              "RelativeDocumentMoniker": "PostagensApi\\Program.cs",
+              "ToolTip": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Program.cs",
+              "RelativeToolTip": "PostagensApi\\Program.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwCMAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T00:15:56.684Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BuilderExtensions.cs",
+              "DocumentMoniker": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Extensions\\BuilderExtensions.cs",
+              "RelativeDocumentMoniker": "PostagensApi\\Extensions\\BuilderExtensions.cs",
+              "ToolTip": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Extensions\\BuilderExtensions.cs",
+              "RelativeToolTip": "PostagensApi\\Extensions\\BuilderExtensions.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAowCsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T00:14:00.68Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
