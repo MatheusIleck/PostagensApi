@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using PostagensApi.Data;
 using PostagensApi.Data.Models;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
-using PostagensApi.Services;
 
-namespace PostagensApi.Controllers
+namespace PostagensApi.Services
 {
     public class PostService(AppDbContext _db) : IPostInterface
     {
@@ -35,13 +35,13 @@ namespace PostagensApi.Controllers
         {
             try
             {
-                
+
                 var post = await _db.Post.FirstOrDefaultAsync(x => x.Id == request.Id && x.AuthorId == request.UserId);
                 if (post == null)
                     return new Response<Post?>(null, 204, "Post não encontrado");
 
 
-                 _db.Post.Remove(post);
+                _db.Post.Remove(post);
                 await _db.SaveChangesAsync();
 
                 return new Response<Post?>(post, 200, "Post removido");

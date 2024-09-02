@@ -1,22 +1,28 @@
-﻿using PostagensApi.Endpoints.Posts;
+﻿using Microsoft.AspNetCore.Authorization;
+using PostagensApi.Endpoints.Posts;
+using PostagensApi.Endpoints.Users;
 using PostagensApi.Extensions;
 using PostagensApi.Requests.Post;
+using System.Security.Claims;
 
 namespace PostagensApi.Endpoints
 {
+    [Authorize]
     public static class Endpoint
     {
         public static void MapEndPoints(this WebApplication app)
         {
             var endpoints = app.MapGroup("");
 
-   
+
+
 
             endpoints.MapGroup("/")
                 .WithTags("Health Check")
                 .MapGet("/", () => new { message = "OK" });
 
             endpoints.MapGroup("v1/Posts")
+                     .RequireAuthorization()
                      .WithTags("Posts")
                      .MapEndpoint<CreatePostEndPoint>()
                      .MapEndpoint<GetPostByIdEndPoint>()
@@ -24,7 +30,9 @@ namespace PostagensApi.Endpoints
                      .MapEndpoint<DeletePostEndPoint>()
                      .MapEndpoint<UpdatePostEndPoint>();
 
-
+            endpoints.MapGroup("v1/User")
+                .WithTags("Users")
+                .MapEndpoint<LoginEndPoint>();
 
 
 

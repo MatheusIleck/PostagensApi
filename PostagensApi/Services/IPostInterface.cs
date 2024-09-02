@@ -4,6 +4,7 @@ using PostagensApi.Response;
 
 namespace PostagensApi.Services
 {
+
     public interface IPostInterface
     {
         Task<Response<Post?>> CreatePostAsync(CreatePostRequest request);

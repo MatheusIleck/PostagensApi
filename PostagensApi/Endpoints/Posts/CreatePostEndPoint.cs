@@ -1,4 +1,5 @@
-﻿using PostagensApi.Data.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using PostagensApi.Data.Models;
 using PostagensApi.Extensions;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
@@ -8,8 +9,8 @@ namespace PostagensApi.Endpoints.Posts
 {
     public class CreatePostEndPoint : IEndpoint
     {
-
         public static void Map(IEndpointRouteBuilder app)
+        
         => app.MapPost("/", HandleAsync)
             .WithName("Post: Create")
             .WithSummary("Create a new Post")
