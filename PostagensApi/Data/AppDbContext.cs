@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PostagensApi.Data.Models;
+using PostagensApi.Models;
 
 namespace PostagensApi.Data
 {
@@ -12,6 +12,8 @@ namespace PostagensApi.Data
         public DbSet<Post> Post { get; set; } = null!;
 
         public DbSet<User> User { get; set; } = null!;
+
+        public DbSet<Like> Likes { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

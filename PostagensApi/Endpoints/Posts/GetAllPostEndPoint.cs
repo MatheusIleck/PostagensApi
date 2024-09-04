@@ -1,5 +1,5 @@
-﻿using PostagensApi.Data.Models;
-using PostagensApi.Extensions;
+﻿using PostagensApi.Extensions;
+using PostagensApi.Models;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
 using PostagensApi.Services;
@@ -15,17 +15,18 @@ namespace PostagensApi.Endpoints.Posts
             .WithSummary("Get all post")
             .WithDescription("Get all post")
             .WithOrder(5)
-            .Produces<Response<List<Post?>>>();
+            .Produces<Response<List<Post?>>>()
+            .RequireAuthorization("AdminOnly");
 
 
         private static async Task<IResult> HandleAsync(
             IPostInterface Interface,
-            int Id
+            HttpContext httpContext
             )
         {
             var request = new GetAllPostRequest()
             {
-                UserId = Id,
+                UserId = int.Parse(httpContext.User.FindFirst("UserId").Value)
 
             };
             var response = await Interface.GetAllPostsAsync(request);

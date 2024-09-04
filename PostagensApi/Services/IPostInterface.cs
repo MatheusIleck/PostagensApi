@@ -1,4 +1,4 @@
-﻿using PostagensApi.Data.Models;
+﻿using PostagensApi.Models;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
 

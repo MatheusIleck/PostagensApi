@@ -1,5 +1,6 @@
-﻿using PostagensApi.Data.Models;
+﻿using Microsoft.AspNetCore.Http;
 using PostagensApi.Extensions;
+using PostagensApi.Models;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
 using PostagensApi.Services;
@@ -19,10 +20,12 @@ namespace PostagensApi.Endpoints.Posts
         public static async Task<IResult> HandleAsync(
             IPostInterface Interface,
             UpdatePostRequest request,
-            int id
+            HttpContext httpContext,
+        int id
      )
         {
-            request.UserId = 1;
+            request.UserId = int.Parse(httpContext.User.FindFirst("UserId").Value);
+            ;
 
             request.Id = id;
 

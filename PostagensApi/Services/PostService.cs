@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using PostagensApi.Data;
-using PostagensApi.Data.Models;
+using PostagensApi.Models;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
 
@@ -62,6 +62,8 @@ namespace PostagensApi.Services
                     .AsNoTracking()
                     .Where(x => x.AuthorId == request.UserId)
                     .OrderBy(x => x.Title).ToListAsync();
+
+     
 
                 if (posts == null)
                     return new Response<List<Post>>(null, 204, "Nenhum post encontrado");

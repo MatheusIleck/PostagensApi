@@ -43,6 +43,7 @@ namespace PostagensApi.Extensions
                 });
 
             });
+
         }
 
         public static void AddDataContexts(this WebApplicationBuilder builder)
@@ -88,7 +89,12 @@ namespace PostagensApi.Extensions
 
             });
 
-          
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+            });
+
+
         }
 
     }

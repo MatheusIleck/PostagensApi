@@ -1,5 +1,6 @@
-﻿using PostagensApi.Data.Models;
+﻿using Microsoft.AspNetCore.Http;
 using PostagensApi.Extensions;
+using PostagensApi.Models;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
 using PostagensApi.Services;
@@ -18,13 +19,14 @@ namespace PostagensApi.Endpoints.Posts
 
         private static async Task<IResult> HandleAsync(
             IPostInterface Interface,
+            HttpContext httpContext,
             int id
             )
         {
             var request = new DeletePostRequest
             {
                 Id = id,
-                UserId = 1
+                UserId = int.Parse(httpContext.User.FindFirst("UserId").Value)
             };
 
             var result = await Interface.DeletePostAsync(request);

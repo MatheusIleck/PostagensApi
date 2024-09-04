@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using PostagensApi.Data.Models;
+using Microsoft.AspNetCore.Http;
 using PostagensApi.Extensions;
+using PostagensApi.Models;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
 using PostagensApi.Services;
+using System.Net.Http;
+using System.Security.Claims;
 
 namespace PostagensApi.Endpoints.Posts
 {
@@ -20,11 +23,12 @@ namespace PostagensApi.Endpoints.Posts
 
         private static async Task<IResult> HandleAsync(
             IPostInterface Interface,
-            CreatePostRequest request
+        CreatePostRequest request,
+            HttpContext httpContext
             )
         {
-            request.UserId = 1;
-            var response = await Interface.CreatePostAsync( request );
+            request.UserId = int.Parse(httpContext.User.FindFirst("UserId").Value);
+            var response = await Interface.CreatePostAsync(request);
             return response.IsSuccess
                 ? TypedResults.Created($"v1/Post/{response.Data?.Id}",response)
                 : TypedResults.BadRequest(response);

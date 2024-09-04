@@ -7,7 +7,7 @@ namespace PostagensApi.Response
         private int _statusCode = 200;
 
         [JsonConstructor]
-        public Response(Task<List<Data.Models.Post>> posts) => _statusCode = 200;
+        public Response(Task<List<Models.Post>> posts) => _statusCode = 200;
 
         public Response(TData? data,
         int statusCode = 200,

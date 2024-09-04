@@ -22,7 +22,7 @@ namespace PostagensApi.Endpoints
                 .MapGet("/", () => new { message = "OK" });
 
             endpoints.MapGroup("v1/Posts")
-                     .RequireAuthorization()
+                     .RequireAuthorization(policy => policy.RequireRole("Admin"))
                      .WithTags("Posts")
                      .MapEndpoint<CreatePostEndPoint>()
                      .MapEndpoint<GetPostByIdEndPoint>()
@@ -32,7 +32,9 @@ namespace PostagensApi.Endpoints
 
             endpoints.MapGroup("v1/User")
                 .WithTags("Users")
-                .MapEndpoint<LoginEndPoint>();
+                .MapEndpoint<LoginEndPoint>()
+                .MapEndpoint<RegisterEndPoint>()
+                .MapEndpoint<LikeAPostEndPoint>();
 
 
 
