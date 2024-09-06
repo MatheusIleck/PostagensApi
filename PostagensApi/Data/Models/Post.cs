@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace PostagensApi.Models;
 
@@ -13,7 +14,10 @@ public partial class Post
 
     public string Description { get; set; }
 
-    public int AuthorId { get; set; }
+    public long AuthorId { get; set; }
+
+    [JsonIgnore]
+    public User User { get; set; } 
 
     public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
 }

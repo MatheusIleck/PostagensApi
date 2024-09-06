@@ -6,13 +6,15 @@ using PostagensApi.Services;
 
 namespace PostagensApi.Endpoints.Users
 {
-    public class LoginEndPoint : IEndpoint
+    public class UserLoginEndPoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
         {
             app.MapPost("/login", Handle)
-               .WithSummary("Users: Login")
-               .WithName("Login")
+               .WithName("User: Login")
+               .WithSummary("Login a user")
+               .WithDescription("Login a user")
+               .WithOrder(2)
                .Produces<string>();
         }
 
@@ -21,8 +23,8 @@ namespace PostagensApi.Endpoints.Users
             IAccountInterface userInterface
         )
         {
-            
-            var result = userInterface.Login(request);
+
+            var result = userInterface.UserAuth(request);
 
             if (result != null)
             {

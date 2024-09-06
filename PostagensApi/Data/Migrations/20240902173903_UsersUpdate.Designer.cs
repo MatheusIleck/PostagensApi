@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PostagensApi.Data;
+using PostagensApi.Models;
 
 #nullable disable
 
 namespace PostagensApi.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(db_SocialContext))]
     [Migration("20240902173903_UsersUpdate")]
     partial class UsersUpdate
     {

@@ -4,11 +4,11 @@ namespace PostagensApi.Requests.Post
 {
     public class CreatePostRequest : Request
     {
-        [Required(ErrorMessage = "Título Inválido")]
-        [MaxLength(80, ErrorMessage = "O titulo deve conter ate 80 caracteres")]
+        [Required(ErrorMessage = "Invalid Title")]
+        [MaxLength(80, ErrorMessage = "The title must be 80 characters or less")]
         public string Title { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Descrição Inválida")]
+        [Required(ErrorMessage = "Invalid description")]
         public string description {  get; set; } = string.Empty;
     }
 }

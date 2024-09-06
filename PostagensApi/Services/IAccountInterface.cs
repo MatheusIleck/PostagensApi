@@ -6,11 +6,15 @@ namespace PostagensApi.Services
 {
     public interface IAccountInterface
     {
-        string Login(UserLoginRequest request);
+        string UserAuth(UserLoginRequest request);
 
-        Task<Response<User>> Register(UserRegisterRequest request);
+        Task<Response<User>> UserRegister(UserRegisterRequest request);
 
         Task<Response<Like>> LikeAPost(LikeAPostRequest request);
+
+        Task<Response<User>> UserRemove(UserRemoveRequest request);
+
+        Task<Response<User>> UserEdit(UserEditRequest request);
 
     }
 }

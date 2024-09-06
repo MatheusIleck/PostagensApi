@@ -10,9 +10,10 @@ namespace PostagensApi.Endpoints.Users
     {
         public static void Map(IEndpointRouteBuilder app)
         => app.MapPost("/like", HandleAsync)
-            .WithSummary("Like: Post")
-            .WithName("Like a post")
+            .WithName("Like")
+            .WithSummary("Like a Post")
             .WithDescription("Like a post")
+            .WithOrder(4)
             .Produces<Response<Like>>();
 
         private static async Task<IResult> HandleAsync(

@@ -6,7 +6,7 @@ using PostagensApi.Services;
 
 namespace PostagensApi.Endpoints.Users
 {
-    public class RegisterEndPoint : IEndpoint
+    public class UserRegisterEndPoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
         => app.MapPost("/", HandleAsync)
@@ -22,7 +22,7 @@ namespace PostagensApi.Endpoints.Users
             UserRegisterRequest request
             )
         {
-            var result = await Interface.Register(request);
+            var result = await Interface.UserRegister(request);
 
             return result.IsSuccess
                 ? TypedResults.Ok(result)

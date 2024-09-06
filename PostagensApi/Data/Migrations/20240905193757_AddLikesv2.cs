@@ -5,7 +5,7 @@
 namespace PostagensApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AddLikes : Migration
+    public partial class AddLikesv2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,7 +14,8 @@ namespace PostagensApi.Migrations
                 name: "Role",
                 table: "User",
                 type: "nvarchar(max)",
-                nullable: true,
+                nullable: false,
+                defaultValueSql: "(N'')",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
@@ -22,7 +23,8 @@ namespace PostagensApi.Migrations
                 name: "Password",
                 table: "User",
                 type: "nvarchar(max)",
-                nullable: true,
+                nullable: false,
+                defaultValueSql: "(N'')",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
@@ -30,7 +32,8 @@ namespace PostagensApi.Migrations
                 name: "Name",
                 table: "User",
                 type: "nvarchar(max)",
-                nullable: true,
+                nullable: false,
+                defaultValueSql: "(N'')",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
@@ -38,7 +41,8 @@ namespace PostagensApi.Migrations
                 name: "Email",
                 table: "User",
                 type: "nvarchar(max)",
-                nullable: true,
+                nullable: false,
+                defaultValueSql: "(N'')",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
@@ -46,7 +50,8 @@ namespace PostagensApi.Migrations
                 name: "Title",
                 table: "Post",
                 type: "nvarchar(max)",
-                nullable: true,
+                nullable: false,
+                defaultValueSql: "(N'')",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
@@ -65,34 +70,33 @@ namespace PostagensApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdUsuario = table.Column<long>(type: "bigint", nullable: false),
-                    IdPost = table.Column<long>(type: "bigint", nullable: false),
-                    IdPostNavigationId = table.Column<long>(type: "bigint", nullable: true),
-                    IdUsuarioNavigationId = table.Column<long>(type: "bigint", nullable: true)
+                    IdPost = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Likes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Likes_Post_IdPostNavigationId",
-                        column: x => x.IdPostNavigationId,
+                        name: "FK_Likes_Post_IdPost",
+                        column: x => x.IdPost,
                         principalTable: "Post",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Likes_User_IdUsuarioNavigationId",
-                        column: x => x.IdUsuarioNavigationId,
+                        name: "FK_Likes_User_IdUsuario",
+                        column: x => x.IdUsuario,
                         principalTable: "User",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Likes_IdPostNavigationId",
+                name: "IX_Likes_IdPost",
                 table: "Likes",
-                column: "IdPostNavigationId");
+                column: "IdPost");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Likes_IdUsuarioNavigationId",
+                name: "IX_Likes_IdUsuario",
                 table: "Likes",
-                column: "IdUsuarioNavigationId");
+                column: "IdUsuario");
         }
 
         /// <inheritdoc />
@@ -106,50 +110,45 @@ namespace PostagensApi.Migrations
                 table: "User",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
-                oldNullable: true);
+                oldDefaultValueSql: "(N'')");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Password",
                 table: "User",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
-                oldNullable: true);
+                oldDefaultValueSql: "(N'')");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
                 table: "User",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
-                oldNullable: true);
+                oldDefaultValueSql: "(N'')");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Email",
                 table: "User",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
-                oldNullable: true);
+                oldDefaultValueSql: "(N'')");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
                 table: "Post",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
-                oldNullable: true);
+                oldDefaultValueSql: "(N'')");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Description",

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PostagensApi.Requests.Post
+namespace PostagensApi.Requests.User
 {
-    public class DeletePostRequest : Request
+    public class UserRemoveRequest
     {
         [Required(ErrorMessage = "A value is required")]
-        public long Id { get; set; }
+        public long id { get; set; }
     }
 }

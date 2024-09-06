@@ -1,4 +1,5 @@
-﻿using PostagensApi.Models;
+﻿using PostagensApi.Dto;
+using PostagensApi.Models;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
 
@@ -9,9 +10,9 @@ namespace PostagensApi.Services
     {
         Task<Response<Post?>> CreatePostAsync(CreatePostRequest request);
 
-        Task<Response<Post?>> GetPostById(GetPostByIdRequest request);
+        Task<Response<PostDto?>> GetPostById(GetPostByIdRequest request);
 
-        Task<Response<List<Post>>> GetAllPostsAsync(GetAllPostRequest request);
+        Task<Response<List<PostDto>>> GetAllPostsAsync(GetAllPostRequest request);
 
         Task<Response<Post?>> UpdatePostAsync(UpdatePostRequest request);
 

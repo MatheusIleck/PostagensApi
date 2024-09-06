@@ -1,33 +1,36 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using PostagensApi.Data;
+using PostagensApi.Dto;
 using PostagensApi.Models;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
 
 namespace PostagensApi.Services
 {
-    public class PostService(AppDbContext _db) : IPostInterface
+    public class PostService(db_SocialContext _db) : IPostInterface
     {
 
         public async Task<Response<Post?>> CreatePostAsync(CreatePostRequest request)
         {
+
+            var user = _db.Users.FirstOrDefault(x=> x.Id == request.UserId);
             var post = new Post()
             {
                 Title = request.Title,
                 Description = request.description,
                 AuthorId = request.UserId,
+                User = user,
             };
             try
             {
-                await _db.Post.AddAsync(post);
+                await _db.Posts.AddAsync(post);
                 await _db.SaveChangesAsync();
 
-                return new Response<Post?>(post, 201, "Post criado com sucesso!");
+                return new Response<Post?>(post, 201, "Post published successfully!");
             }
             catch
             {
-                return new Response<Post?>(null, 500, "Não foi possivel criar o post");
+                return new Response<Post?>(null, 500, "Post creation failed");
             }
         }
 
@@ -36,63 +39,79 @@ namespace PostagensApi.Services
             try
             {
 
-                var post = await _db.Post.FirstOrDefaultAsync(x => x.Id == request.Id && x.AuthorId == request.UserId);
+                var post = await _db.Posts.FirstOrDefaultAsync(x => x.Id == request.Id && x.AuthorId == request.UserId);
                 if (post == null)
-                    return new Response<Post?>(null, 204, "Post não encontrado");
+                    return new Response<Post?>(null, 204, "Post not found");
 
 
-                _db.Post.Remove(post);
+                _db.Posts.Remove(post);
                 await _db.SaveChangesAsync();
 
-                return new Response<Post?>(post, 200, "Post removido");
+                return new Response<Post?>(post, 200, "Post removed");
 
 
             }
             catch
             {
-                return new Response<Post?>(null, 500, "Solicitação Inválida");
+                return new Response<Post?>(null, 500, "Invalid request");
             }
         }
 
-        public async Task<Response<List<Post>>> GetAllPostsAsync(GetAllPostRequest request)
+        public async Task<Response<List<PostDto>>> GetAllPostsAsync(GetAllPostRequest request)
         {
             try
             {
-                var posts = await _db.Post
-                    .AsNoTracking()
+                var posts = await _db.Posts
                     .Where(x => x.AuthorId == request.UserId)
-                    .OrderBy(x => x.Title).ToListAsync();
+                    .Include(p => p.Likes).Select(p => new PostDto
+                    {
+                        Id = p.Id,
+                        Title = p.Title,
+                        Description = p.Description,
+                        AuthorId = p.AuthorId,
+                        Likes = p.Likes.Count()
+                    })
+                    .ToListAsync(); 
 
-     
 
-                if (posts == null)
-                    return new Response<List<Post>>(null, 204, "Nenhum post encontrado");
+                if (posts == null || !posts.Any())
+                    return new Response<List<PostDto>>(null, 204, "No posts found");
 
-                return new Response<List<Post>>(posts, 200, "Posts listados");
-
-
-
+                return new Response<List<PostDto>>(posts, 200, "Posts listed");
             }
-            catch
+            catch (Exception ex)
             {
-                return new Response<List<Post>>(null, 400, "Solicitação Inválida");
+                return new Response<List<PostDto>>(null, 400, "Something went wrong");
             }
         }
 
-        public async Task<Response<Post?>> GetPostById(GetPostByIdRequest request)
+        public async Task<Response<PostDto?>> GetPostById(GetPostByIdRequest request)
         {
             try
             {
-                var post = await _db.Post.FirstAsync(x => x.Id == request.Id);
 
-                if (post == null)
-                    return new Response<Post?>(null, 204, "Post não encontrado");
+                var postss = await _db.Posts
+                     .Include(p => p.Likes)
+                     .Select(p => new PostDto
+                     {
+                         Id = p.Id,
+                         Title = p.Title,
+                         Description = p.Description,
+                         AuthorId = p.AuthorId,
+                         Likes = p.Likes.Count()
+                     })
+                     .FirstOrDefaultAsync(p => p.Id == request.Id);
 
-                return new Response<Post?>(post, 302, "Post localizado");
+                if (postss == null)
+                {
+                    return new Response<PostDto?>(null, 204, "Post not found");
+                }
+
+                return new Response<PostDto?>(postss, 200, "The post was found"); // Use 200 for success
             }
-            catch
+            catch (Exception ex)
             {
-                return new Response<Post?>(null, 400, "Solicitação inválida");
+                return new Response<PostDto?>(null, 400, ex.Message);
             }
         }
 
@@ -109,19 +128,19 @@ namespace PostagensApi.Services
 
                 };
                 if (post == null)
-                    return new Response<Post?>(null, 204, "Não foi possivel atualizar o post");
+                    return new Response<Post?>(null, 204, "The post could not be updated");
 
-                _db.Post.Update(post);
+                _db.Posts.Update(post);
                 await _db.SaveChangesAsync();
 
 
-                return new Response<Post?>(post, 200, "Post atualizado com sucesso!");
+                return new Response<Post?>(post, 200, "Post updated successfully!");
 
 
             }
             catch
             {
-                return new Response<Post?>(null, 500, "Solicitação Inválida");
+                return new Response<Post?>(null, 500, "Inválid request");
             }
         }
     }

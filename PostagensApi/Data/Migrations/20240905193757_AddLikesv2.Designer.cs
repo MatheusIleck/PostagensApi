@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostagensApi.Models;
 
@@ -10,9 +11,11 @@ using PostagensApi.Models;
 namespace PostagensApi.Migrations
 {
     [DbContext(typeof(db_SocialContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240905193757_AddLikesv2")]
+    partial class AddLikesv2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,8 +55,8 @@ namespace PostagensApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("AuthorId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -65,8 +68,6 @@ namespace PostagensApi.Migrations
                         .HasDefaultValueSql("(N'')");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
 
                     b.ToTable("Post", (string)null);
                 });
@@ -119,23 +120,11 @@ namespace PostagensApi.Migrations
                     b.HasOne("PostagensApi.Models.User", "IdUsuarioNavigation")
                         .WithMany("Likes")
                         .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("IdPostNavigation");
 
                     b.Navigation("IdUsuarioNavigation");
-                });
-
-            modelBuilder.Entity("PostagensApi.Models.Post", b =>
-                {
-                    b.HasOne("PostagensApi.Models.User", "User")
-                        .WithMany("Posts")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PostagensApi.Models.Post", b =>
@@ -146,8 +135,6 @@ namespace PostagensApi.Migrations
             modelBuilder.Entity("PostagensApi.Models.User", b =>
                 {
                     b.Navigation("Likes");
-
-                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

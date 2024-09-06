@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using PostagensApi.Dto;
 using PostagensApi.Extensions;
 using PostagensApi.Models;
 using PostagensApi.Requests.Post;
@@ -15,7 +16,7 @@ namespace PostagensApi.Endpoints.Posts
             .WithSummary("Get post by id")
             .WithDescription("Get post by id")
             .WithOrder(4)
-            .Produces<Response<Post?>>();
+            .Produces<Response<PostDto?>>();
 
         private static async Task<IResult> HandleAsync(
             IPostInterface Interface,

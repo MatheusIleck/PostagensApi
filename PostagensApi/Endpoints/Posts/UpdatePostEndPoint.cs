@@ -25,7 +25,6 @@ namespace PostagensApi.Endpoints.Posts
      )
         {
             request.UserId = int.Parse(httpContext.User.FindFirst("UserId").Value);
-            ;
 
             request.Id = id;
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using PostagensApi.Data;
 using PostagensApi.Models;
 using PostagensApi.Requests.User;
 using PostagensApi.Response;
@@ -10,7 +10,7 @@ using System.Text;
 
 namespace PostagensApi.Services
 {
-    public class AccountService(AppDbContext _db) : IAccountInterface
+    public class AccountService(db_SocialContext _db) : IAccountInterface
     {
         public async Task<Response<Like>> LikeAPost(LikeAPostRequest request)
         {
@@ -37,26 +37,52 @@ namespace PostagensApi.Services
             }
         }
 
-        public string Login(UserLoginRequest request)
+        public string UserAuth(UserLoginRequest request)
         {
             try
             {
-                var user = _db.User.FirstOrDefault(x => x.Name == request.Username && x.Password == request.Password);
+                var user = _db.Users.FirstOrDefault(x => x.Name == request.Username && x.Password == request.Password);
 
                 if (user != null)
                 {
                     var token = gerarTokenJWT(user);
                     return token;
                 }
-                return "Não foi possivel autenticar";
+                return "Authentication failed";
             }
             catch
             {
-                return "Algo deu errado";
+                return "Something went wrong";
             }
         }
 
-        public async Task<Response<User>> Register(UserRegisterRequest request)
+        public async Task<Response<User>> UserEdit(UserEditRequest request)
+        {
+            try
+            {
+                var Updateduser = new User
+                {
+                    Id = request.Id,
+                    Name = request.Name,
+                    Email = request.Email,
+                    Password = request.Password,
+
+                };
+
+                _db.Users.Update(Updateduser);
+                await _db.SaveChangesAsync();
+
+                return new Response<User>(Updateduser, 200, "User edited successfully");
+
+            }
+            catch
+            {
+                return new Response<User>(null, 500, "Something went wrong");
+
+            }
+        }
+
+        public async Task<Response<User>> UserRegister(UserRegisterRequest request)
         {
             try
             {
@@ -68,18 +94,51 @@ namespace PostagensApi.Services
                     Role = "usuario"
                 };
                 if (newUser == null)
-                    return new Response<User>(null, 400, "Usuario não registrado");
+                    return new Response<User>(null, 400, "User registration failed");
 
-                await _db.User.AddAsync(newUser);
+                await _db.Users.AddAsync(newUser);
                 await _db.SaveChangesAsync();
 
-                return new Response<User>(newUser, 201, "Usuario registrado com sucesso!");
+                return new Response<User>(newUser, 201, "User registered successfully!");
 
 
             }
             catch
             {
-                    return new Response<User>(null, 500, "Algo deu errado");
+                    return new Response<User>(null, 500, "Something went wrong");
+
+            }
+        }
+
+        public async Task<Response<User>> UserRemove(UserRemoveRequest request)
+        {
+            try
+            {
+                var user = await _db.Users.FirstOrDefaultAsync(x => x.Id == request.id);
+
+
+                if (user == null)
+                    return new Response<User>(null, 404, "User not found");
+
+                var UsersPost = await _db.Posts.Where(x => x.AuthorId == user.Id).ToListAsync();
+                var UserLikes = await _db.Likes.Where(x=> x.IdUsuario == user.Id).ToListAsync();
+
+                if (UsersPost != null)
+                     _db.Posts.RemoveRange(UsersPost);
+
+                if (UserLikes != null)
+                    _db.Likes.RemoveRange(UserLikes);
+
+
+                _db.Users.Remove(user);
+                await _db.SaveChangesAsync();
+
+                return new Response<User>(user, 200, "User deleted successfully!");
+
+            }
+            catch
+            {
+                return new Response<User>(null, 500, "Something went wrong");
 
             }
         }

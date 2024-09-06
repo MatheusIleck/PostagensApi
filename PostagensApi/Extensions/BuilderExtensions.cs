@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using PostagensApi.Data;
+using PostagensApi.Models;
 using PostagensApi.Services;
 using System.Text;
 
@@ -50,7 +50,7 @@ namespace PostagensApi.Extensions
         {
             builder
                 .Services
-                .AddDbContext<AppDbContext>(
+                .AddDbContext<db_SocialContext>(
                     x =>
                     {
                         x.UseSqlServer(ApiConfiguration.ConnectionString);

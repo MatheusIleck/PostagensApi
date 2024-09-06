@@ -1,4 +1,5 @@
-﻿using PostagensApi.Extensions;
+﻿using PostagensApi.Dto;
+using PostagensApi.Extensions;
 using PostagensApi.Models;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
@@ -15,8 +16,7 @@ namespace PostagensApi.Endpoints.Posts
             .WithSummary("Get all post")
             .WithDescription("Get all post")
             .WithOrder(5)
-            .Produces<Response<List<Post?>>>()
-            .RequireAuthorization("AdminOnly");
+            .Produces<Response<List<PostDto?>>>();
 
 
         private static async Task<IResult> HandleAsync(
