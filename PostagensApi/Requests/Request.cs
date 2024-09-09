@@ -2,7 +2,7 @@
 {
     public class Request
     {
-        public int UserId { get; set; }
+        public long UserId { get; set; }
 
     }
 }

@@ -12,8 +12,8 @@ namespace PostagensApi.Endpoints.Posts
         public static void Map(IEndpointRouteBuilder app)
         => app.MapDelete("/{id}", HandleAsync)
             .WithName("Post: Delete")
-            .WithSummary("Delete a post")
-            .WithDescription("Delete a post")
+            .WithSummary("Delete a Post")
+            .WithDescription("Delete a Post")
             .WithOrder(2)
             .Produces<Response<Post?>>();
 

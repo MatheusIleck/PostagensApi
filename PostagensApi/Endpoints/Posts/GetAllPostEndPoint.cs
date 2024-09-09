@@ -13,8 +13,8 @@ namespace PostagensApi.Endpoints.Posts
         public static void Map(IEndpointRouteBuilder app)
         => app.MapGet("/", HandleAsync)
             .WithName("Post: Get All")
-            .WithSummary("Get all post")
-            .WithDescription("Get all post")
+            .WithSummary("Get all Post")
+            .WithDescription("Get all Post")
             .WithOrder(5)
             .Produces<Response<List<PostDto?>>>();
 

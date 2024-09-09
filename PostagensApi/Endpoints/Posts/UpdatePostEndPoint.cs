@@ -12,8 +12,8 @@ namespace PostagensApi.Endpoints.Posts
         public static void Map(IEndpointRouteBuilder app)
         => app.MapPut("/{id}", HandleAsync)
             .WithName("Post: Update")
-            .WithSummary("Update a post")
-            .WithDescription("Update a post")
+            .WithSummary("Update a Post")
+            .WithDescription("Update a Post")
             .WithOrder(3)
             .Produces<Response<Post?>>();
 

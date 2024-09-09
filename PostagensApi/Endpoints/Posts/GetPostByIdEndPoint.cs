@@ -12,9 +12,9 @@ namespace PostagensApi.Endpoints.Posts
     {
         public static void Map(IEndpointRouteBuilder app)
         => app.MapGet("/{id}", HandleAsync)
-            .WithName("Post: Get By Id")
-            .WithSummary("Get post by id")
-            .WithDescription("Get post by id")
+            .WithName("Post: Get By ID")
+            .WithSummary("Get Post by ID")
+            .WithDescription("Get Post by ID")
             .WithOrder(4)
             .Produces<Response<PostDto?>>();
 

@@ -12,9 +12,10 @@ namespace PostagensApi.Endpoints.Users
         => app.MapPost("/like", HandleAsync)
             .WithName("Like")
             .WithSummary("Like a Post")
-            .WithDescription("Like a post")
+            .WithDescription("Like a Post")
             .WithOrder(4)
-            .Produces<Response<Like>>();
+            .Produces<Response<Like>>()
+            .RequireAuthorization();
 
         private static async Task<IResult> HandleAsync(
             IAccountInterface Interface,

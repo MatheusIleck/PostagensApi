@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace PostagensApi.Requests.User
 {
-    public class UserEditRequest : Request
+    public class UserEditRequest
     {
-        [Required(ErrorMessage = "A value is required")]
+        [JsonIgnore]
         public long Id { get; set; }
 
         [Required(ErrorMessage = "A value is required")]

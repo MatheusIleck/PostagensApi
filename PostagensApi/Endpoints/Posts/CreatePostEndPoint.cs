@@ -27,7 +27,7 @@ namespace PostagensApi.Endpoints.Posts
             HttpContext httpContext
             )
         {
-            request.UserId = int.Parse(httpContext.User.FindFirst("UserId").Value);
+            request.UserId = long.Parse(httpContext.User.FindFirst("UserId").Value);
             var response = await Interface.CreatePostAsync(request);
             return response.IsSuccess
                 ? TypedResults.Created($"v1/Post/{response.Data?.Id}",response)

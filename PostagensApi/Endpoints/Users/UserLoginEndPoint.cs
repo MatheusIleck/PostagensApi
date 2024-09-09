@@ -12,25 +12,31 @@ namespace PostagensApi.Endpoints.Users
         {
             app.MapPost("/login", Handle)
                .WithName("User: Login")
-               .WithSummary("Login a user")
-               .WithDescription("Login a user")
+               .WithSummary("User Login")
+               .WithDescription("User Login")
                .WithOrder(2)
                .Produces<string>();
         }
 
         private static IResult Handle(
             UserLoginRequest request,
-            IAccountInterface userInterface
+            IAccountInterface userInterface,
+            HttpContext httpContext
         )
         {
-
+            if (httpContext.User.Identity.IsAuthenticated)
+            {
+                return TypedResults.BadRequest();
+            
+            }
             var result = userInterface.UserAuth(request);
 
-            if (result != null)
-            {
-                return TypedResults.Ok(result);
-            }
+                if (result != null)
+                {
+                    return TypedResults.Ok(result);
+                }
             return TypedResults.BadRequest();
+
         }
     }
 

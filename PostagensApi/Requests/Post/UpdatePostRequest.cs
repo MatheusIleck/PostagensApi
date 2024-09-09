@@ -1,9 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace PostagensApi.Requests.Post
 {
-    public class UpdatePostRequest : Request
+    public class UpdatePostRequest 
     {
+
+        [JsonIgnore]
         public long Id { get; set; }
 
         [Required(ErrorMessage = "Invalid Title")]
@@ -12,5 +15,9 @@ namespace PostagensApi.Requests.Post
 
         [Required(ErrorMessage = "Invalid description")]
         public string? Description { get; set; }
+
+        [JsonIgnore]
+        public long UserId { get; set; }
+
     }
 }

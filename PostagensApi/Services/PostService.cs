@@ -28,9 +28,9 @@ namespace PostagensApi.Services
 
                 return new Response<Post?>(post, 201, "Post published successfully!");
             }
-            catch
+            catch (Exception ex) 
             {
-                return new Response<Post?>(null, 500, "Post creation failed");
+                return new Response<Post?>(null, 500, ex.Message);
             }
         }
 
@@ -79,7 +79,7 @@ namespace PostagensApi.Services
 
                 return new Response<List<PostDto>>(posts, 200, "Posts listed");
             }
-            catch (Exception ex)
+            catch
             {
                 return new Response<List<PostDto>>(null, 400, "Something went wrong");
             }
@@ -119,22 +119,23 @@ namespace PostagensApi.Services
         {
             try
             {
-                var post = new Post
-                {
-                    AuthorId = request.UserId,
-                    Id = request.Id,
-                    Title = request.Title,
-                    Description = request.Description
+                var findPost = _db.Posts.FirstOrDefault(x=> x.Id == request.Id);
 
-                };
-                if (post == null)
+                if(findPost.AuthorId == request.UserId)
+                {
+                    findPost.Title = request.Title;
+                    findPost.Description = request.Description;
+
+                    _db.Posts.Update(findPost);
+                    await _db.SaveChangesAsync();
+
+
+                    return new Response<Post?>(findPost, 200, "Post updated successfully!");
+                }
+
+                else 
                     return new Response<Post?>(null, 204, "The post could not be updated");
 
-                _db.Posts.Update(post);
-                await _db.SaveChangesAsync();
-
-
-                return new Response<Post?>(post, 200, "Post updated successfully!");
 
 
             }
