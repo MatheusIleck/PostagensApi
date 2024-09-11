@@ -22,6 +22,11 @@ namespace PostagensApi.Endpoints.Users
             HttpContext httpContext,
             LikeAPostRequest request)
         {
+            var response = new LikeAPostRequest
+            {
+                postId = request.postId,
+                UserId = long.Parse(httpContext.User.FindFirst("UserId").Value)
+            };
             var result = await Interface.LikeAPost(request);
 
             return result.IsSuccess

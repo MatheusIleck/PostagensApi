@@ -4,6 +4,7 @@ using PostagensApi.Dto;
 using PostagensApi.Models;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
+using System.Xml.Linq;
 
 namespace PostagensApi.Services
 {
@@ -13,13 +14,12 @@ namespace PostagensApi.Services
         public async Task<Response<Post?>> CreatePostAsync(CreatePostRequest request)
         {
 
-            var user = _db.Users.FirstOrDefault(x=> x.Id == request.UserId);
+            var user = _db.Users.FirstOrDefault(x => x.Id == request.UserId);
             var post = new Post()
             {
                 Title = request.Title,
                 Description = request.description,
-                AuthorId = request.UserId,
-                User = user,
+                UserId = request.UserId,
             };
             try
             {
@@ -28,7 +28,7 @@ namespace PostagensApi.Services
 
                 return new Response<Post?>(post, 201, "Post published successfully!");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return new Response<Post?>(null, 500, ex.Message);
             }
@@ -39,7 +39,7 @@ namespace PostagensApi.Services
             try
             {
 
-                var post = await _db.Posts.FirstOrDefaultAsync(x => x.Id == request.Id && x.AuthorId == request.UserId);
+                var post = await _db.Posts.FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
                 if (post == null)
                     return new Response<Post?>(null, 204, "Post not found");
 
@@ -57,57 +57,109 @@ namespace PostagensApi.Services
             }
         }
 
-        public async Task<Response<List<PostDto>>> GetAllPostsAsync(GetAllPostRequest request)
+        public async Task<Response<List<PostDto>>> GetAllPostAsync(GetAllPostRequest request)
+        {
+            try
+            {
+                var posts = await _db.Posts.Include(p => p.Comments)
+                    .ThenInclude(u => u.User)
+                    .Include(p => p.Likes)
+                    .ToListAsync();
+
+                var paginatedPosts = posts.Select(x => new PostDto
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Description = x.Description,
+                    AuthorId = x.UserId,
+                    Likes = x.Likes.Count(),
+                    Comments = x.Comments.Select(c=> new CommentDto
+                    {
+                        Name = c.User.Name,
+                        Comment = c.Comment1
+                    }).ToList()
+                })
+                    .Skip(request.pageIndex * request.pageSize)
+                  .Take(request.pageSize)
+                  .ToList();
+
+                return new Response<List<PostDto>>(paginatedPosts, 200, "Sucesso");
+            }
+            catch(Exception ex) 
+            {
+                return new Response<List<PostDto>>(null, 500, ex.Message);
+            }
+        }
+
+        public async Task<Response<List<PostDto>>> GetAllYourPostsAsync(GetAllYourPostRequest request)
         {
             try
             {
                 var posts = await _db.Posts
-                    .Where(x => x.AuthorId == request.UserId)
-                    .Include(p => p.Likes).Select(p => new PostDto
+                    .Where(x => x.UserId == request.UserId)
+                    .Include(p => p.Comments)
+                    .ThenInclude(u => u.User)
+                    .Include(p => p.Likes)
+                    .ToListAsync();
+
+
+                var postDto = posts.Select(x => new PostDto
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Description = x.Description,
+                    AuthorId = x.UserId,
+                    Likes = x.Likes.Count(),
+                    Comments = x.Comments.Select(c => new CommentDto
                     {
-                        Id = p.Id,
-                        Title = p.Title,
-                        Description = p.Description,
-                        AuthorId = p.AuthorId,
-                        Likes = p.Likes.Count()
-                    })
-                    .ToListAsync(); 
+                        Name = c.User.Name,
+                        Comment = c.Comment1
+                    }).ToList()
+                }).ToList();
 
-
-                if (posts == null || !posts.Any())
+                if (postDto == null || !posts.Any())
                     return new Response<List<PostDto>>(null, 204, "No posts found");
 
-                return new Response<List<PostDto>>(posts, 200, "Posts listed");
+                return new Response<List<PostDto>>(postDto, 200, "Posts listed");
             }
-            catch
+            catch (Exception ex)
             {
-                return new Response<List<PostDto>>(null, 400, "Something went wrong");
+                return new Response<List<PostDto>>(null, 400, ex.Message);
             }
         }
 
-        public async Task<Response<PostDto?>> GetPostById(GetPostByIdRequest request)
+        public async Task<Response<PostDto?>> GetPostByIdAsync(GetPostByIdRequest request)
         {
             try
             {
 
-                var postss = await _db.Posts
-                     .Include(p => p.Likes)
-                     .Select(p => new PostDto
-                     {
-                         Id = p.Id,
-                         Title = p.Title,
-                         Description = p.Description,
-                         AuthorId = p.AuthorId,
-                         Likes = p.Likes.Count()
-                     })
-                     .FirstOrDefaultAsync(p => p.Id == request.Id);
+                var posts = await _db.Posts
+                 .Include(p => p.Likes)
+                 .Include(p => p.Comments)
+                 .ThenInclude(c => c.User)
+                 .Where(p => p.Id == request.Id)
+                 .ToListAsync();
 
-                if (postss == null)
+                var postDto = posts.Select(p => new PostDto
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Description = p.Description,
+                    AuthorId = p.UserId,
+                    Likes = p.Likes.Count(),
+                    Comments = p.Comments.Select(c => new CommentDto
+                    {
+                        Name = c.User.Name,
+                        Comment = c.Comment1
+                    }).ToList()
+                }).FirstOrDefault();
+
+                if (postDto == null)
                 {
                     return new Response<PostDto?>(null, 204, "Post not found");
                 }
 
-                return new Response<PostDto?>(postss, 200, "The post was found"); // Use 200 for success
+                return new Response<PostDto?>(postDto, 200, "The post was found");
             }
             catch (Exception ex)
             {
@@ -119,9 +171,9 @@ namespace PostagensApi.Services
         {
             try
             {
-                var findPost = _db.Posts.FirstOrDefault(x=> x.Id == request.Id);
+                var findPost = _db.Posts.FirstOrDefault(x => x.Id == request.Id);
 
-                if(findPost.AuthorId == request.UserId)
+                if (findPost.UserId == request.UserId)
                 {
                     findPost.Title = request.Title;
                     findPost.Description = request.Description;
@@ -133,7 +185,7 @@ namespace PostagensApi.Services
                     return new Response<Post?>(findPost, 200, "Post updated successfully!");
                 }
 
-                else 
+                else
                     return new Response<Post?>(null, 204, "The post could not be updated");
 
 
@@ -144,5 +196,6 @@ namespace PostagensApi.Services
                 return new Response<Post?>(null, 500, "Inválid request");
             }
         }
+
     }
 }

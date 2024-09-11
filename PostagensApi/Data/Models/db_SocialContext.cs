@@ -13,6 +13,8 @@ public partial class db_SocialContext : DbContext
     {
     }
 
+    public virtual DbSet<Comment> Comments { get; set; }
+
     public virtual DbSet<Like> Likes { get; set; }
 
     public virtual DbSet<Post> Posts { get; set; }
@@ -21,6 +23,25 @@ public partial class db_SocialContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Comment>(entity =>
+        {
+            entity.Property(e => e.Comment1)
+                .IsRequired()
+                .HasMaxLength(200)
+                .IsFixedLength()
+                .HasColumnName("Comment");
+
+            entity.HasOne(d => d.Post).WithMany(p => p.Comments)
+                .HasForeignKey(d => d.PostId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Comments_Post");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Comments)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Comments_User");
+        });
+
         modelBuilder.Entity<Like>(entity =>
         {
             entity.HasIndex(e => e.IdPost, "IX_Likes_IdPost");
@@ -30,16 +51,24 @@ public partial class db_SocialContext : DbContext
             entity.HasOne(d => d.IdPostNavigation).WithMany(p => p.Likes).HasForeignKey(d => d.IdPost);
 
             entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Likes)
-                .HasForeignKey(d => d.IdUsuario);
+                .HasForeignKey(d => d.IdUsuario)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Post>(entity =>
         {
             entity.ToTable("Post");
 
+            entity.HasIndex(e => e.UserId, "IX_Post_AuthorId");
+
             entity.Property(e => e.Title)
                 .IsRequired()
                 .HasDefaultValueSql("(N'')");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Posts)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Post_User_AuthorId");
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -58,16 +87,6 @@ public partial class db_SocialContext : DbContext
             entity.Property(e => e.Role)
                 .IsRequired()
                 .HasDefaultValueSql("(N'')");
-
-            entity.HasMany(u => u.Posts)
-               .WithOne(p => p.User)
-               .HasForeignKey(p => p.AuthorId)
-               .OnDelete(DeleteBehavior.SetNull);
-
-            entity.HasMany(u => u.Likes)
-             .WithOne(p => p.IdUsuarioNavigation)
-             .HasForeignKey(p => p.IdUsuario)
-             .OnDelete(DeleteBehavior.SetNull);
         });
 
         OnModelCreatingPartial(modelBuilder);

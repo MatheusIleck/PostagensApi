@@ -15,6 +15,10 @@
    "T4TemplatePath": null,
    "Tables": [
       {
+         "Name": "[dbo].[Comments]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Likes]",
          "ObjectType": 0
       },

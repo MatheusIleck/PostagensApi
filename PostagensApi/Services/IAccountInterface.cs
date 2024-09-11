@@ -16,5 +16,7 @@ namespace PostagensApi.Services
 
         Task<Response<User>> UserEdit(UserEditRequest request);
 
+        Task<Response<Comment>> UserComment(UserCommentRequest request);
+
     }
 }

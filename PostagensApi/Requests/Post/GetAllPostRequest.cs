@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-using PostagensApi.Models;
-
-namespace PostagensApi.Requests.Post
+﻿namespace PostagensApi.Requests.Post
 {
-    public class GetAllPostRequest : Request
+    public class GetAllPostRequest
     {
-        public List<Models.Post> Posts { get; set; } = new List<Models.Post>();
+
+        public int pageIndex { get; set; }
+
+        public int pageSize { get; set; }
     }
 }

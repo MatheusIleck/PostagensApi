@@ -9,7 +9,7 @@ namespace PostagensApi.Endpoints.Users
     public class UserRemoveEndPoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
-      => app.MapDelete("/{id}", HandleAsync)
+      => app.MapDelete("/remove/{id}", HandleAsync)
             .WithName("User: Remove")
             .WithSummary("Remove a User")
             .WithDescription("Remove a User")

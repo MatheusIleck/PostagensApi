@@ -1,6 +1,6 @@
-﻿using PostagensApi.Dto;
+﻿using Microsoft.AspNetCore.Mvc;
+using PostagensApi.Dto;
 using PostagensApi.Extensions;
-using PostagensApi.Models;
 using PostagensApi.Requests.Post;
 using PostagensApi.Response;
 using PostagensApi.Services;
@@ -9,34 +9,30 @@ namespace PostagensApi.Endpoints.Posts
 {
     public class GetAllPostEndPoint : IEndpoint
     {
-
         public static void Map(IEndpointRouteBuilder app)
-        => app.MapGet("/", HandleAsync)
-            .WithName("Post: Get All")
-            .WithSummary("Get all Post")
-            .WithDescription("Get all Post")
-            .WithOrder(5)
-            .Produces<Response<List<PostDto?>>>();
-
+        => app.MapPost("/Feed", HandleAsync)
+            .WithName("Post: All Post")
+            .WithSummary("Get All Post")
+            .WithDescription("Get All Post")
+            .Produces<Response<List<PostDto>>>();
 
         private static async Task<IResult> HandleAsync(
-            IPostInterface Interface,
-            HttpContext httpContext
+            [FromBody]
+            GetAllPostRequest request, 
+            IPostInterface Interface
             )
         {
-            var request = new GetAllPostRequest()
+            var response = new GetAllPostRequest
             {
-                UserId = int.Parse(httpContext.User.FindFirst("UserId").Value)
-
+                pageIndex = request.pageIndex,
+                pageSize = request.pageSize,
             };
-            var response = await Interface.GetAllPostsAsync(request);
 
-            return response.IsSuccess
-                ? TypedResults.Ok(response)
-                : TypedResults.BadRequest(response);
+            var result = await Interface.GetAllPostAsync(response);
+
+            return result.IsSuccess
+                ? TypedResults.Ok(result)
+                : TypedResults.BadRequest(result);
         }
-
-
-
     }
 }

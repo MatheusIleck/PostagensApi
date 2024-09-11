@@ -42,7 +42,7 @@ namespace PostagensApi.Services
         {
             try
             {
-            
+
                 var user = _db.Users.FirstOrDefault(x => x.Name == request.Username && x.Password == request.Password);
 
                 if (user != null)
@@ -58,13 +58,39 @@ namespace PostagensApi.Services
             }
         }
 
+        public async Task<Response<Comment>> UserComment(UserCommentRequest request)
+        {
+            try
+            {
+                var comment = new Comment
+                {
+                    PostId = request.idPost,
+                    UserId = request.UserId,
+                    Comment1 = request.Comment
+
+                };
+
+                if (comment == null)
+                    return new Response<Comment>(null, 400, "Bad request");
+
+                await _db.Comments.AddAsync(comment);
+                await _db.SaveChangesAsync();
+
+                return new Response<Comment>(comment, 201, "Your comment has been submitted successfully.");
+            }
+            catch
+            {
+                return new Response<Comment>(null, 500, "Comment Invalid");
+            }
+        }
+
         public async Task<Response<User>> UserEdit(UserEditRequest request)
         {
             try
             {
-                var user = _db.Users.First(x=> x.Id == request.Id);
+                var user = _db.Users.First(x => x.Id == request.Id);
 
-                if(user == null)
+                if (user == null)
                 {
                     return new Response<User>(null, 400, "User not found");
                 }
@@ -72,7 +98,7 @@ namespace PostagensApi.Services
                 user.Name = request.Name;
                 user.Password = request.Password;
                 user.Email = request.Email;
-                
+
 
                 _db.Users.Update(user);
                 await _db.SaveChangesAsync();
@@ -110,7 +136,7 @@ namespace PostagensApi.Services
             }
             catch
             {
-                    return new Response<User>(null, 500, "Something went wrong");
+                return new Response<User>(null, 500, "Something went wrong");
 
             }
         }
@@ -125,11 +151,11 @@ namespace PostagensApi.Services
                 if (user == null)
                     return new Response<User>(null, 404, "User not found");
 
-                var UsersPost = await _db.Posts.Where(x => x.AuthorId == user.Id).ToListAsync();
-                var UserLikes = await _db.Likes.Where(x=> x.IdUsuario == user.Id).ToListAsync();
+                var UsersPost = await _db.Posts.Where(x => x.UserId == user.Id).ToListAsync();
+                var UserLikes = await _db.Likes.Where(x => x.IdUsuario == user.Id).ToListAsync();
 
                 if (UsersPost != null)
-                     _db.Posts.RemoveRange(UsersPost);
+                    _db.Posts.RemoveRange(UsersPost);
 
                 if (UserLikes != null)
                     _db.Likes.RemoveRange(UserLikes);

@@ -10,13 +10,13 @@ namespace PostagensApi.Services
     {
         Task<Response<Post?>> CreatePostAsync(CreatePostRequest request);
 
-        Task<Response<PostDto?>> GetPostById(GetPostByIdRequest request);
+        Task<Response<PostDto?>> GetPostByIdAsync(GetPostByIdRequest request);
 
-        Task<Response<List<PostDto>>> GetAllPostsAsync(GetAllPostRequest request);
+        Task<Response<List<PostDto>>> GetAllYourPostsAsync(GetAllYourPostRequest request);
 
         Task<Response<Post?>> UpdatePostAsync(UpdatePostRequest request);
 
         Task<Response<Post?>>DeletePostAsync(DeletePostRequest request);
-
+        Task<Response<List<PostDto>>> GetAllPostAsync(GetAllPostRequest request);
     }
 }

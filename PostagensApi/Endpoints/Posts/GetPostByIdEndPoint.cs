@@ -30,7 +30,7 @@ namespace PostagensApi.Endpoints.Posts
                 UserId = int.Parse(httpContext.User.FindFirst("UserId").Value),
 
             };
-            var response = await Interface.GetPostById(request);
+            var response = await Interface.GetPostByIdAsync(request);
             return response.IsSuccess
                 ? TypedResults.Ok(response)
                 : TypedResults.BadRequest(response);

@@ -41,7 +41,7 @@ namespace PostagensApi.Migrations
 
                     b.HasIndex(new[] { "IdUsuario" }, "IX_Likes_IdUsuario");
 
-                    b.ToTable("Likes");
+                    b.ToTable("Likes", (string)null);
                 });
 
             modelBuilder.Entity("PostagensApi.Models.Post", b =>

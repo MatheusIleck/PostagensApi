@@ -14,7 +14,7 @@ namespace PostagensApi.Endpoints.Posts
     {
         public static void Map(IEndpointRouteBuilder app)
         
-        => app.MapPost("/", HandleAsync)
+        => app.MapPost("/create", HandleAsync)
             .WithName("Post: Create")
             .WithSummary("Create a new Post")
             .WithDescription("Create a new Post")
