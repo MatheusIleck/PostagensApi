@@ -63,6 +63,7 @@ namespace PostagensApi.Services
             {
                 var posts = await _db.Posts.Include(p => p.Comments)
                     .ThenInclude(u => u.User)
+                    .Include(u => u.User)
                     .Include(p => p.Likes)
                     .ToListAsync();
 
@@ -71,7 +72,7 @@ namespace PostagensApi.Services
                     Id = x.Id,
                     Title = x.Title,
                     Description = x.Description,
-                    AuthorId = x.UserId,
+                    userName = x.User.Name,
                     Likes = x.Likes.Count(),
                     Comments = x.Comments.Select(c=> new CommentDto
                     {
@@ -98,8 +99,9 @@ namespace PostagensApi.Services
                 var posts = await _db.Posts
                     .Where(x => x.UserId == request.UserId)
                     .Include(p => p.Comments)
-                    .ThenInclude(u => u.User)
+                    .ThenInclude(uc => uc.User)
                     .Include(p => p.Likes)
+                    .Include(u=> u.User)
                     .ToListAsync();
 
 
@@ -108,7 +110,7 @@ namespace PostagensApi.Services
                     Id = x.Id,
                     Title = x.Title,
                     Description = x.Description,
-                    AuthorId = x.UserId,
+                    userName = x.User.Name,
                     Likes = x.Likes.Count(),
                     Comments = x.Comments.Select(c => new CommentDto
                     {
@@ -145,7 +147,7 @@ namespace PostagensApi.Services
                     Id = p.Id,
                     Title = p.Title,
                     Description = p.Description,
-                    AuthorId = p.UserId,
+                    userName = p.User.Name,
                     Likes = p.Likes.Count(),
                     Comments = p.Comments.Select(c => new CommentDto
                     {
@@ -167,11 +169,13 @@ namespace PostagensApi.Services
             }
         }
 
-        public async Task<Response<Post?>> UpdatePostAsync(UpdatePostRequest request)
+        public async Task<Response<PostDto?>> UpdatePostAsync(UpdatePostRequest request)
         {
             try
             {
-                var findPost = _db.Posts.FirstOrDefault(x => x.Id == request.Id);
+                var findPost = _db.Posts
+                    .Include(u => u.User)
+                    .FirstOrDefault(x => x.Id == request.Id && x.UserId == request.UserId);
 
                 if (findPost.UserId == request.UserId)
                 {
@@ -182,18 +186,27 @@ namespace PostagensApi.Services
                     await _db.SaveChangesAsync();
 
 
-                    return new Response<Post?>(findPost, 200, "Post updated successfully!");
+                    PostDto postDto = new PostDto
+                    {
+                        Title = findPost.Title,
+                        Description = findPost.Description,
+                        Id = findPost.Id,
+                        userName = findPost.User.Name,
+                        Likes = findPost.Likes.Count(),
+                    };
+
+                    return new Response<PostDto?>(postDto, 200, "Post updated successfully!");
                 }
 
                 else
-                    return new Response<Post?>(null, 204, "The post could not be updated");
+                    return new Response<PostDto?>(null, 204, "The post could not be updated");
 
 
 
             }
             catch
             {
-                return new Response<Post?>(null, 500, "Inválid request");
+                return new Response<PostDto?>(null, 500, "Inválid request");
             }
         }
 

@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using PostagensApi.Models;
 using PostagensApi.Services;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace PostagensApi.Extensions
 {
@@ -16,7 +17,10 @@ namespace PostagensApi.Extensions
         }
         public static void AddDocumentation(this WebApplicationBuilder builder)
         {
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(x =>
 

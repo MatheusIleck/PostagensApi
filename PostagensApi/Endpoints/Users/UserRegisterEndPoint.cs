@@ -30,6 +30,8 @@ namespace PostagensApi.Endpoints.Users
                 return TypedResults.BadRequest();
 
             }
+
+        
             var result = await Interface.UserRegister(request);
 
             return result.IsSuccess

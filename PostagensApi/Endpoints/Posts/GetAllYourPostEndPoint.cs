@@ -1,4 +1,5 @@
-﻿using PostagensApi.Dto;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using PostagensApi.Dto;
 using PostagensApi.Extensions;
 using PostagensApi.Models;
 using PostagensApi.Requests.Post;
@@ -12,7 +13,7 @@ namespace PostagensApi.Endpoints.Posts
     {
 
         public static void Map(IEndpointRouteBuilder app)
-        => app.MapGet("/", HandleAsync)
+        => app.MapGet("/user/{id}", HandleAsync)
             .WithName("Post: Get all your Posts")
             .WithSummary("Get all your Post")
             .WithDescription("Get all your Post")
@@ -22,19 +23,24 @@ namespace PostagensApi.Endpoints.Posts
 
         private static async Task<IResult> HandleAsync(
             IPostInterface Interface,
-            HttpContext httpContext
+            HttpContext httpContext,
+            long id
             )
         {
-            var request = new GetAllYourPostRequest()
+            if (id == long.Parse(httpContext.User.FindFirst("UserId").Value))
             {
-                UserId = int.Parse(httpContext.User.FindFirst("UserId").Value)
+                var request = new GetAllYourPostRequest()
+                {
+                    UserId = long.Parse(httpContext.User.FindFirst("UserId").Value)
 
-            };
-            var response = await Interface.GetAllYourPostsAsync(request);
+                };
+                var response = await Interface.GetAllYourPostsAsync(request);
 
-            return response.IsSuccess
-                ? TypedResults.Ok(response)
-                : TypedResults.BadRequest(response);
+                return response.IsSuccess
+                    ? TypedResults.Ok(response)
+                    : TypedResults.BadRequest(response);
+            }
+            return TypedResults.BadRequest();
         }
 
 

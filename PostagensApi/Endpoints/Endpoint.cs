@@ -26,8 +26,8 @@ namespace PostagensApi.Endpoints
                      .WithTags("Posts")
                      .MapEndpoint<CreatePostEndPoint>()
                      .MapEndpoint<GetPostByIdEndPoint>()
-                     .MapEndpoint<GetAllYourPostEndPoint>()
                      .MapEndpoint<DeletePostEndPoint>()
+                     .MapEndpoint<GetAllYourPostEndPoint>()
                      .MapEndpoint<UpdatePostEndPoint>()
                      .MapEndpoint<GetAllPostEndPoint>();
 
@@ -39,6 +39,7 @@ namespace PostagensApi.Endpoints
                 .MapEndpoint<UserRemoveEndPoint>()
                 .MapEndpoint<UserEditEndPoint>()
                 .MapEndpoint<UserCommentEndPoint>();
+
 
 
 

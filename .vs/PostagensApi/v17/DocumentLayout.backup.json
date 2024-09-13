@@ -3,20 +3,8 @@
   "WorkspaceRootPath": "D:\\vs\\projetos\\PostagensApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|d:\\vs\\projetos\\postagensapi\\postagensapi\\services\\postservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|solutionrelative:postagensapi\\services\\postservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|d:\\vs\\projetos\\postagensapi\\postagensapi\\dto\\commentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|solutionrelative:postagensapi\\dto\\commentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|d:\\vs\\projetos\\postagensapi\\postagensapi\\dto\\postdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|solutionrelative:postagensapi\\dto\\postdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|d:\\vs\\projetos\\postagensapi\\postagensapi\\endpoints\\posts\\getallpostendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|solutionrelative:postagensapi\\endpoints\\posts\\getallpostendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|d:\\vs\\projetos\\postagensapi\\postagensapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{75DF946B-1214-47C6-A44E-751FCEFB7F05}|PostagensApi\\PostagensApi.csproj|solutionrelative:postagensapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,54 +22,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PostDto.cs",
-              "DocumentMoniker": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Dto\\PostDto.cs",
-              "RelativeDocumentMoniker": "PostagensApi\\Dto\\PostDto.cs",
-              "ToolTip": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Dto\\PostDto.cs",
-              "RelativeToolTip": "PostagensApi\\Dto\\PostDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABNAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-11T18:30:18.316Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CommentDto.cs",
-              "DocumentMoniker": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Dto\\CommentDto.cs",
-              "RelativeDocumentMoniker": "PostagensApi\\Dto\\CommentDto.cs",
-              "ToolTip": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Dto\\CommentDto.cs",
-              "RelativeToolTip": "PostagensApi\\Dto\\CommentDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAQAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-11T18:27:32.817Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PostService.cs",
-              "DocumentMoniker": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Services\\PostService.cs",
-              "RelativeDocumentMoniker": "PostagensApi\\Services\\PostService.cs",
-              "ToolTip": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Services\\PostService.cs",
-              "RelativeToolTip": "PostagensApi\\Services\\PostService.cs",
-              "ViewState": "AgIAAJAAAAAAAAAAAAAEwIwAAAAgAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Program.cs",
+              "RelativeDocumentMoniker": "PostagensApi\\Program.cs",
+              "ToolTip": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Program.cs",
+              "RelativeToolTip": "PostagensApi\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-11T17:39:39.417Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "GetAllPostEndPoint.cs",
-              "DocumentMoniker": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Endpoints\\Posts\\GetAllPostEndPoint.cs",
-              "RelativeDocumentMoniker": "PostagensApi\\Endpoints\\Posts\\GetAllPostEndPoint.cs",
-              "ToolTip": "D:\\vs\\projetos\\PostagensApi\\PostagensApi\\Endpoints\\Posts\\GetAllPostEndPoint.cs",
-              "RelativeToolTip": "PostagensApi\\Endpoints\\Posts\\GetAllPostEndPoint.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-11T17:36:11.133Z",
+              "WhenOpened": "2024-09-13T18:40:55.44Z",
               "EditorCaption": ""
             }
           ]

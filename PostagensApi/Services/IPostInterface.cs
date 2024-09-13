@@ -14,7 +14,7 @@ namespace PostagensApi.Services
 
         Task<Response<List<PostDto>>> GetAllYourPostsAsync(GetAllYourPostRequest request);
 
-        Task<Response<Post?>> UpdatePostAsync(UpdatePostRequest request);
+        Task<Response<PostDto?>> UpdatePostAsync(UpdatePostRequest request);
 
         Task<Response<Post?>>DeletePostAsync(DeletePostRequest request);
         Task<Response<List<PostDto>>> GetAllPostAsync(GetAllPostRequest request);
